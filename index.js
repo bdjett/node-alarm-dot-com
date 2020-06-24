@@ -190,18 +190,29 @@ function getCurrentState(systemID, authOpts) {
     const partitionIDs = rels.partitions.data.map(p => p.id)
     if (typeof partitionIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(PARTITIONS_URL, partitionIDs, authOpts))
+    } else {
+	  resultingComponentsContainer.push(Promise.resolve([]))
     }
+	
     const sensorIDs = rels.sensors.data.map(s => s.id)
     if (typeof sensorIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(SENSORS_URL, sensorIDs, authOpts))
+    } else {
+	  resultingComponentsContainer.push(Promise.resolve([]))
     }
+	
     const lightIDs = rels.lights.data.map(l => l.id)
     if (typeof lightIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(LIGHTS_URL, lightIDs, authOpts))
+    } else {
+	  resultingComponentsContainer.push(Promise.resolve([]))
     }
+	
     const lockIDs = rels.locks.data.map(l => l.id)
     if (typeof lockIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(LOCKS_URL, lockIDs, authOpts))
+    } else {
+	  resultingComponentsContainer.push(Promise.resolve([]))
     }
 
     return Promise.all(resultingComponentsContainer)
