@@ -228,7 +228,6 @@ function getCurrentState(systemID, authOpts) {
           locks: typeof locks != 'undefined' ? locks.data : [],
           relationships: rels
         }
-		console.log(result)
 		return result
       })
 
