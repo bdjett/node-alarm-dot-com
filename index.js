@@ -191,35 +191,35 @@ function getCurrentState(systemID, authOpts) {
     if (typeof partitionIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(PARTITIONS_URL, partitionIDs, authOpts))
     } else {
-	  resultingComponentsContainer.push(Promise.resolve([]))
+	  resultingComponentsContainer.push(Promise.resolve(undefined))
     }
 	
     const sensorIDs = rels.sensors.data.map(s => s.id)
     if (typeof sensorIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(SENSORS_URL, sensorIDs, authOpts))
     } else {
-	  resultingComponentsContainer.push(Promise.resolve([]))
+	  resultingComponentsContainer.push(Promise.resolve(undefined))
     }
 	
     const lightIDs = rels.lights.data.map(l => l.id)
     if (typeof lightIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(LIGHTS_URL, lightIDs, authOpts))
     } else {
-	  resultingComponentsContainer.push(Promise.resolve([]))
+	  resultingComponentsContainer.push(Promise.resolve(undefined))
     }
 	
     const lockIDs = rels.locks.data.map(l => l.id)
     if (typeof lockIDs[0] != 'undefined') {
       resultingComponentsContainer.push(getComponents(LOCKS_URL, lockIDs, authOpts))
     } else {
-	  resultingComponentsContainer.push(Promise.resolve([]))
+	  resultingComponentsContainer.push(Promise.resolve(undefined))
     }
 
     return Promise.all(resultingComponentsContainer)
       .then(resultingSystemComponents => {
         // destructured assignment
         const [partitions, sensors, lights, locks] = resultingSystemComponents
-        return {
+        const result = {
           id: res.data.id,
           attributes: res.data.attributes,
           partitions: typeof partitions != 'undefined' ? partitions.data : [],
@@ -228,6 +228,8 @@ function getCurrentState(systemID, authOpts) {
           locks: typeof locks != 'undefined' ? locks.data : [],
           relationships: rels
         }
+		console.log(result)
+		return result
       })
 
   })

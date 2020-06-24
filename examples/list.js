@@ -61,6 +61,19 @@ function main() {
           ` ${name}, ${msgs.join(', ')}`
         )
       })
+	  
+	  res.locks.forEach(l => {
+		const name = l.attributes.description
+        const msgs = [l.attributes.stateText]
+        if (l.criticalBattery) msgs.push('Battery Critical')
+        else if (l.lowBattery) msgs.push('Battery Low')
+
+        console.log(
+          '\x1b[36m%s\x1b[0m%s',
+          '[Lock]',
+          ` ${name}, ${msgs.join(', ')}`
+		  )
+	  })
     })
     .catch(err => {
       console.error(err)
